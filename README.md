@@ -9,148 +9,126 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
     }
-    html, body {
+    body {
       width: 100%;
-      height: 100%;
-      background-color: #f5f5f5;
+      min-height: 100vh;
+      background: #fff;
       color: #333;
-      line-height: 1.6;
-    }
-    .container {
-      width: 100%;
-      min-height: 100vh; /* ocupa toda a altura da tela */
-      background-color: white;
-      display: flex;
-      flex-direction: column;
     }
     header {
       text-align: center;
-      padding: 20px;
-      border-bottom: 2px solid #f0f0f0;
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
     }
     h1 {
       color: #4285f4;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
     .timer-container {
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      margin: 15px;
+      background: #f8f9fa;
       border: 1px solid #e8eaed;
+      border-radius: 6px;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
     }
     .timer {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: #d93025;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
     }
     .time-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 60px;
+      min-width: 55px;
     }
     .time-value {
-      font-size: 2.2rem;
-      line-height: 1;
+      font-size: 1.8rem;
     }
     .time-label {
-      font-size: 0.9rem;
-      color: #5f6368;
+      font-size: 0.8rem;
+      color: #555;
       text-transform: uppercase;
     }
     .expired-message {
-      color: #d93025;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.5rem;
-      padding: 20px;
-      background-color: #fce8e6;
-      border-radius: 8px;
-      margin: 15px;
       display: none;
+      margin: 15px;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #d93025;
+      background: #fce8e6;
+      border-radius: 6px;
     }
-    .form-container, .form-esgotado {
-      flex: 1; /* ocupa o espaço restante da tela */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
+    .form-container {
+      width: 100%;
+      height: calc(100vh - 220px); /* altura dinâmica tirando header e timer */
     }
     iframe {
       width: 100%;
-      height: 100%; /* iframe expande toda a tela */
+      height: 100%;
       border: none;
     }
     .form-esgotado {
-      color: #d93025;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.5rem;
-      background-color: #fce8e6;
-      border-radius: 8px;
-      padding: 20px;
       display: none;
-    }
-    @media (max-width: 600px) {
-      .timer {
-        font-size: 1.4rem;
-        gap: 10px;
-      }
-      .time-value {
-        font-size: 1.8rem;
-      }
+      margin: 15px;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #d93025;
+      background: #fce8e6;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Pesquisa de Satisfação</h1>
-      <p>Participe da nossa pesquisa e ajude-nos a melhorar nossos serviços!</p>
-    </header>
-    
-    <div class="timer-container" id="timer-container">
-      <p>Tempo restante para responder:</p>
-      <div class="timer">
-        <div class="time-unit">
-          <span id="days" class="time-value">00</span>
-          <span class="time-label">Dias</span>
-        </div>
-        <div class="time-unit">
-          <span id="hours" class="time-value">00</span>
-          <span class="time-label">Horas</span>
-        </div>
-        <div class="time-unit">
-          <span id="minutes" class="time-value">00</span>
-          <span class="time-label">Minutos</span>
-        </div>
-        <div class="time-unit">
-          <span id="seconds" class="time-value">00</span>
-          <span class="time-label">Segundos</span>
-        </div>
+  <header>
+    <h1>Pesquisa de Satisfação</h1>
+    <p>Participe da nossa pesquisa e ajude-nos a melhorar!</p>
+  </header>
+
+  <div class="timer-container" id="timer-container">
+    <p>Tempo restante:</p>
+    <div class="timer">
+      <div class="time-unit">
+        <span id="days" class="time-value">00</span>
+        <span class="time-label">Dias</span>
+      </div>
+      <div class="time-unit">
+        <span id="hours" class="time-value">00</span>
+        <span class="time-label">Horas</span>
+      </div>
+      <div class="time-unit">
+        <span id="minutes" class="time-value">00</span>
+        <span class="time-label">Min</span>
+      </div>
+      <div class="time-unit">
+        <span id="seconds" class="time-value">00</span>
+        <span class="time-label">Seg</span>
       </div>
     </div>
-    
-    <div id="expired-message" class="expired-message">
-      Este formulário expirou!
-    </div>
-    
-    <div class="form-container" id="form-container">
-      <iframe id="form-iframe" 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSdK3E_h1ibAlLXrcOGcHmLV4G4O16siwrBT3r35827_Mpvijg/viewform?embedded=true">
-      </iframe>
-    </div>
-    <div id="form-esgotado" class="form-esgotado">
-      Formulário - Tempo esgotado.
-    </div>
+  </div>
+
+  <div id="expired-message" class="expired-message">
+    Este formulário expirou!
+  </div>
+
+  <div class="form-container" id="form-container">
+    <iframe id="form-iframe" 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSdK3E_h1ibAlLXrcOGcHmLV4G4O16siwrBT3r35827_Mpvijg/viewform?embedded=true">
+    </iframe>
+  </div>
+  <div id="form-esgotado" class="form-esgotado">
+    Formulário - Tempo esgotado.
   </div>
 
   <script>
@@ -174,7 +152,7 @@
         timerContainer.style.display = 'none';
         expiredMessage.style.display = 'block';
         formContainer.style.display = 'none';
-        formEsgotado.style.display = 'flex';
+        formEsgotado.style.display = 'block';
         return;
       }
 
